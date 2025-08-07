@@ -10,7 +10,7 @@ function SendBox({ user, myWaId }) {
 
         if (!/^[0-9]+$/.test(user.number)) return;
 
-        const messages = await fetch(`${import.meta.env.VITE_API_URL}/messages`, {
+        const messages = await fetch(`${import.meta.env.VITE_API_URL}/api/messages`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
