@@ -13,7 +13,7 @@ function App() {
   const [newNumber, setNewNumber] = useState('');
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/messages?myWaId=${myInfo.wa_id}`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/messages?myWaId=${myInfo.wa_id}`)
       .then(res => res.json())
       .then(data => setConversations(data));
   }, []);
