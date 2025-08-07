@@ -117,7 +117,7 @@ function ChatWindow({ userId, messages, myWaId }) {
             </div>
 
             {/* Messages */}
-            <div className="flex-1 px-16 py-4 overflow-y-auto bg-[#0b141a]">
+            <div className="flex-1 px-4 py-4 overflow-y-auto bg-[#0b141a]">
                 <div className="space-y-2">
                     {messages.map(msg => (
                         <MessageBubble key={msg._id} msg={msg} myWaId={myWaId} />

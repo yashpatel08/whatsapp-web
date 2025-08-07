@@ -1,5 +1,4 @@
 const Message = require('../models/Message');
-
 exports.getAllConversations = async (req, res) => {
   try {
     const myWaId = req.query.myWaId; // e.g. '919876543210'
@@ -35,7 +34,13 @@ exports.sendMessage = async (req, res) => {
       status: 'sent',
       meta_msg_id: `demo-${Date.now()}`
     });
-
+    
+    const io = req.app.get('io');
+    io.emit('new_message', {
+      to_wa_id,
+      message:newMsg
+    });
+    console.log("📤 Emitted new_message socket event:", newMsg);
     res.status(201).json(newMsg);
   } catch (err) {
     console.error('Send message error:', err);
