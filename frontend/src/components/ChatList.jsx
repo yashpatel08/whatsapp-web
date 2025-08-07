@@ -1,7 +1,9 @@
-import React from 'react';
+import { useState } from 'react';
 import { Search, MoreVertical } from 'lucide-react';
 
 function ChatList({ conversations, onSelect, selectedUser, onNewNumberChange, newNumber }) {
+    const [showUserInfo, setShowUserInfo] = useState(false);
+    const userInfo = JSON.parse(localStorage.getItem('whatsapp_user') || '{}');
     const handleEnterKey = (e) => {
         if (e.key === 'Enter' && newNumber.trim()) {
             onSelect(newNumber.trim());
@@ -10,19 +12,36 @@ function ChatList({ conversations, onSelect, selectedUser, onNewNumberChange, ne
 
     return (
         <div className="w-[30%] bg-[#111b21] border-r border-[#313d45] flex flex-col">
-            {/* Header */}
             <div className="h-[59px] bg-[#202c33] px-4 flex items-center justify-between">
                 <div className="w-10 h-10 rounded-full bg-[#6b7c85] flex items-center justify-center">
                     <span className="text-[#e9edef] text-sm font-medium">ME</span>
                 </div>
                 <div className="flex items-center gap-2">
-                    <button className="w-10 h-10 rounded-full hover:bg-[#374045] flex items-center justify-center">
+                    <button className="w-10 h-10 rounded-full hover:bg-[#374045] flex items-center justify-center"
+                        onClick={() => setShowUserInfo(prev => !prev)}
+                    >
                         <MoreVertical className="w-5 h-5 text-[#aebac1]" />
                     </button>
                 </div>
             </div>
 
-            {/* Search / New Number */}
+            {showUserInfo && (
+                <div className="px-4 py-2 text-white text-sm bg-[#2a3942] shadow-md border-b border-[#313d45]">
+                    <span>
+                        Logged in as: <strong>{userInfo.name || 'Unknown'}</strong> ({userInfo.wa_id || 'N/A'})
+                    </span>
+                    <button
+                        onClick={() => {
+                            localStorage.removeItem('whatsapp_user');
+                            window.location.reload();
+                        }}
+                        className="ml-3 text-red-400 hover:text-red-300"
+                    >
+                        Logout
+                    </button>
+                </div>
+            )}
+
             <div className="p-3 bg-[#111b21]">
                 <div className="relative">
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#8696a0]" />
@@ -37,7 +56,6 @@ function ChatList({ conversations, onSelect, selectedUser, onNewNumberChange, ne
                 </div>
             </div>
 
-            {/* Chat List */}
             <div className="flex-1 overflow-y-auto bg-[#111b21]">
                 {Object.keys(conversations).map(wa_id => {
                     const lastMessage = conversations[wa_id][conversations[wa_id].length - 1];

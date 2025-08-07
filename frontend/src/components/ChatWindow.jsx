@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import MessageBubble from './MessageBubble';
 import SendBox from './SendBox';
 import { Search, MoreVertical, Phone, Video } from 'lucide-react';
 
-function ChatWindow({ userId, messages, myWaId }) {
+function ChatWindow({ userId, messages, myWaId, refreshMessages }) {
     const isNewChat = messages.length === 0;
     const [customName, setCustomName] = useState('');
     const [editingName, setEditingName] = useState(isNewChat);
@@ -16,11 +16,11 @@ function ChatWindow({ userId, messages, myWaId }) {
                 setEditingName(false);
             } else {
                 setCustomName('');
-                setEditingName(true); // if no name, prompt edit
+                setEditingName(true);
             }
         } else {
             setCustomName('');
-            setEditingName(true); // new chat
+            setEditingName(true);
         }
     }, [userId]);
 
@@ -57,7 +57,6 @@ function ChatWindow({ userId, messages, myWaId }) {
 
     return (
         <div className="w-[70%] flex flex-col bg-[#0b141a]">
-            {/* Header */}
             <div className="h-[59px] bg-[#202c33] px-4 flex items-center justify-between border-b border-[#313d45]">
                 <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-[#6b7c85] flex items-center justify-center">
@@ -116,7 +115,6 @@ function ChatWindow({ userId, messages, myWaId }) {
                 </div>
             </div>
 
-            {/* Messages */}
             <div className="flex-1 px-4 py-4 overflow-y-auto bg-[#0b141a]">
                 <div className="space-y-2">
                     {messages.map(msg => (
@@ -125,8 +123,7 @@ function ChatWindow({ userId, messages, myWaId }) {
                 </div>
             </div>
 
-            {/* Send Box */}
-            <SendBox user={user} myWaId={myWaId} />
+            <SendBox user={user} myWaId={myWaId} refreshMessages={refreshMessages} />
         </div>
     );
 }
