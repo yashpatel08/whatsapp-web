@@ -122,7 +122,7 @@ npm run dev
 
 ## 🌐 Deployment
 
-* Frontend: **Vercel** ([https://whatsapp-web-xi.vercel.app](https://whatsapp-web-xi.vercel.app))
+* Frontend: **Vercel** ([https://whatsapp-web-xi.vercel.app](https://whatsapp-psi-nine.vercel.app/))
 * Backend: **Render / Your own server**
 
 ---
